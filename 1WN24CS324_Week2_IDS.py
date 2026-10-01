@@ -6,7 +6,7 @@ class EightPuzzle:
     def get_neighbors(self, state):
         neighbors = []
         row, col = -1, -1
-        # Locate blank tile (0)
+      
         for r in range(3):
             for c in range(3):
                 if state[r][c] == 0:
@@ -29,7 +29,6 @@ class EightPuzzle:
 
         return neighbors
 
-    # --- Depth-First Search (DFS) ---
     def solve_dfs(self, max_depth=15):
         stack = [(self.start_state, [], 0)]
         visited = set()
@@ -52,7 +51,6 @@ class EightPuzzle:
 
         return None
 
-    # --- Iterative Deepening Search (IDS) ---
     def _dls(self, state, limit, path):
         if state == self.goal_state:
             return path
@@ -63,7 +61,7 @@ class EightPuzzle:
         cutoff_occurred = False
 
         for neighbor_state, move in self.get_neighbors(state):
-            # Branch cycle detection
+
             if neighbor_state in [node[0] for node in path]:
                 continue
 
@@ -87,31 +85,19 @@ class EightPuzzle:
         return None, max_limit
 
 
-# ==========================================
-# NEW INPUT INSTANCE
-# ==========================================
 
-# Starting Board:
-# 1  2  3
-# 4  5  6
-# 0  7  8
 new_start = (
     (1, 2, 3),
     (4, 5, 6),
     (0, 7, 8)
 )
 
-# Target Goal Board:
-# 1  2  3
-# 4  5  6
-# 7  8  0
 standard_goal = (
     (1, 2, 3),
     (4, 5, 6),
     (7, 8, 0)
 )
 
-# Run solvers
 puzzle = EightPuzzle(new_start, standard_goal)
 
 dfs_result = puzzle.solve_dfs(max_depth=10)
